@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scube_task_app/sub_page.dart';
 import 'login_page.dart';
 import 'home_page.dart';
 
@@ -20,6 +21,7 @@ class ScubeTaskApp extends StatelessWidget {
       home: const LoginPage(),
       routes: {
         '/home': (context) => const HomePage(),
+        '/sub': (context) => const SubPage()
       },
       debugShowCheckedModeBanner: false,
     );

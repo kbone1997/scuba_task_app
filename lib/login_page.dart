@@ -14,10 +14,10 @@ class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
 
   void _handleLogin() {
-    if (_formKey.currentState!.validate()) {
+   
       // Navigate to home page
       Navigator.pushReplacementNamed(context, '/home');
-    }
+    
   }
 
   @override
