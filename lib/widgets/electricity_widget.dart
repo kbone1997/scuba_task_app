@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scube_task_app/electricity_dashboard_part.dart';
+import 'package:scube_task_app/widgets/data_widget.dart';
+import 'package:scube_task_app/widgets/source_load_widget.dart';
 
 class ElectricityWidget extends StatelessWidget {
   const ElectricityWidget({super.key});
@@ -7,6 +9,36 @@ class ElectricityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 0.6;
+    final List<Map<String, dynamic>> dataCardsValues = [
+      {
+        "activeStatus": true,
+        "data1": 5553.01,
+        "data2": 3434.23,
+        "image": "assets/images/solar-cell.png",
+        "title": "Data View",
+      },
+      {
+        "activeStatus": true,
+        "data1": 1280.75,
+        "data2": 980.42,
+        "image": "assets/images/battery.png",
+        "title": "Data Type 2",
+      },
+      {
+        "activeStatus": false,
+        "data1": 845.24,
+        "data2": 620.16,
+        "image": "assets/images/power.png",
+        "title": "Data Type 3",
+      },
+      {
+        "activeStatus": true,
+        "data1": 2300.05,
+        "data2": 1900.55,
+        "image": "assets/images/solar-cell.png",
+        "title": "Total Solar",
+      },
+    ];
 
     return Container(
       height: height,
@@ -33,12 +65,17 @@ class ElectricityWidget extends StatelessWidget {
           const Divider(thickness: 1),
 
           /// Title
-          const Text(
-            'Electricity',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Center(
+            child: const Text(
+              'Electricity',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+            ),
           ),
-
-          const SizedBox(height: 16),
+          Divider(thickness: 1),
 
           /// Circle Indicator
           Center(
@@ -69,52 +106,37 @@ class ElectricityWidget extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
-          const Divider(thickness: 1),
-
           /// Source / Load
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              Text('Source', style: TextStyle(fontWeight: FontWeight.w600)),
-              Text('Load'),
-            ],
-          ),
+          SourceLoadToggle(),
 
           const Divider(thickness: 1),
           const SizedBox(height: 8),
 
           /// Scrollable Demo Cards
           Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EnergyDashboard(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 60,
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Demo Card ${index + 1}',
-                      style: const TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                );
-              },
+            child: Scrollbar(
+              child: ListView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  final card = dataCardsValues[index];
+                  return DataCard(
+                    index: index,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EnergyDashboard(),
+                        ),
+                      );
+                    },
+                    activeStatus: card['activeStatus'],
+                    data1: card['data1'],
+                    data2: card['data2'],
+                    image: Image.asset(card['image'], width: 24, height: 24),
+                    title: card['title'],
+                  );
+                },
+              ),
             ),
           ),
         ],

@@ -58,8 +58,8 @@ class CustomCardWidget extends StatelessWidget {
               child: Text(
                 text,
                 style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
+                  color: Colors.blueGrey,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
                 overflow: TextOverflow.ellipsis,
