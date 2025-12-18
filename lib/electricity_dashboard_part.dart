@@ -43,7 +43,10 @@ class EnergyDashboardState extends State<EnergyDashboard> {
                 isSelected: [!isRevenueView, isRevenueView],
                 onPressed:
                     (index) => setState(() => isRevenueView = index == 1),
-                children: [Text("Data View"), Text("Revenue View")],
+                children: [
+                  Container(child: Text("Data View")),
+                  Text("Revenue View"),
+                ],
               ),
 
               SizedBox(height: 40),
@@ -94,18 +97,23 @@ class EnergyDashboardState extends State<EnergyDashboard> {
 
               // 4. Conditional Custom Data UI
               if (isCustomData) ...[
-                Row(
-                  children: [
-                    Expanded(flex: 3, child: _buildDateField("From Date")),
-                    SizedBox(width: 10),
-                    Expanded(flex: 3, child: _buildDateField("To Date")),
-                    SizedBox(width: 10),
-                    Expanded(flex: 1, child: _buildSearchField()),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Expanded(flex: 3, child: _buildDateField("From Date")),
+                      SizedBox(width: 10),
+                      Expanded(flex: 3, child: _buildDateField("To Date")),
+                      SizedBox(width: 10),
+                      Expanded(flex: 1, child: _buildSearchField()),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 15),
                 // Square Search Bar
+                EnergyChartWidget(),
               ],
+              SizedBox(height: 15),
               EnergyChartWidget(),
             ],
           ),
@@ -119,8 +127,13 @@ class EnergyDashboardState extends State<EnergyDashboard> {
       readOnly: true,
       decoration: InputDecoration(
         labelText: label,
-        suffixIcon: Icon(Icons.calendar_today, size: 12),
+        labelStyle: TextStyle(fontSize: 12),
+        suffixIcon: Icon(Icons.calendar_today_outlined, size: 24),
         border: OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 12, // ⬅ increase/decrease height
+          horizontal: 12,
+        ),
       ),
     );
   }
@@ -129,8 +142,15 @@ class EnergyDashboardState extends State<EnergyDashboard> {
     return TextField(
       readOnly: true,
       decoration: InputDecoration(
-        suffixIcon: Icon(Icons.search, size: 18),
+        suffixIcon: Icon(Icons.search, size: 28, color: Colors.blue),
         border: OutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blue, width: 1),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 12, // ⬅ increase/decrease height
+          horizontal: 12,
+        ),
       ),
     );
   }

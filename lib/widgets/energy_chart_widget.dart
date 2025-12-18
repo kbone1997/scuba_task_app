@@ -12,25 +12,35 @@ class EnergyChartWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: Colors.blueGrey),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  "Energy Chart",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            SizedBox(
+              height: 80,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "Energy Chart",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(
+                      "5.53 kWh",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                const Text(
-                  "20kWh",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
-              ],
+              ),
             ),
-            const SizedBox(height: 12),
             Expanded(
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -70,7 +80,7 @@ class EnergyChartWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey[50],
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: Colors.blueGrey),
       ),
       child: Row(
         children: [
@@ -116,11 +126,11 @@ class EnergyChartWidget extends StatelessWidget {
               children: [
                 // Row 1: Data
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text(
-                      "Data",
-                      style: TextStyle(color: Colors.black54, fontSize: 12),
+                      "Data   :  ",
+                      style: TextStyle(color: Colors.black54, fontSize: 14),
                     ),
                     Text(
                       "$value ($percent)",
@@ -134,14 +144,14 @@ class EnergyChartWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 // Row 2: Cost
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text(
-                      "Cost",
-                      style: TextStyle(color: Colors.black54, fontSize: 12),
+                      "Cost   :  ",
+                      style: TextStyle(color: Colors.black54, fontSize: 14),
                     ),
                     Text(
-                      cost,
+                      '$cost ৳',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
