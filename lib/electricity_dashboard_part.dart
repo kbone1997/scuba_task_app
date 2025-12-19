@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scube_task_app/widgets/custom_app_bar.dart';
 import 'package:scube_task_app/widgets/energy_chart_widget.dart';
+import 'package:scube_task_app/widgets/expandable_data_card.dart';
 import 'package:scube_task_app/widgets/radio_button.dart';
+import 'package:scube_task_app/widgets/semi_circle_gauge.dart';
 
 class EnergyDashboard extends StatefulWidget {
   const EnergyDashboard({super.key});
@@ -87,90 +89,83 @@ class EnergyDashboardState extends State<EnergyDashboard> {
                       ),
                     ),
 
-                    SizedBox(height: 40),
-
-                    // 2. Rounded Progress Bar with Text Inside
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        SizedBox(
-                          width: 150,
-                          height: 150,
-                          child: CircularProgressIndicator(
-                            value: 0.55, // 55%
-                            strokeWidth: 12,
-                            backgroundColor: Colors.grey[200],
-                            strokeCap: StrokeCap.round,
-                          ),
-                        ),
-                        Text(
-                          "55.00\nkwh/sqt",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 40),
-
-                    // 3. Selection: Today Data vs Custom Data
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        buildCustomRadioButton(
-                          size: 14,
-                          label: 'Today Data',
-                          isSelected: !isCustomData,
-                          onTap: () {
-                            setState(() {
-                              isCustomData = false;
-                            });
-                          },
-                        ),
-                        buildCustomRadioButton(
-                          size: 14,
-                          isSelected: isCustomData,
-                          label: 'Custom Date Data',
-                          onTap: () {
-                            setState(() {
-                              isCustomData = true;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-
                     SizedBox(height: 20),
 
-                    // 4. Conditional Custom Data UI
-                    if (isCustomData) ...[
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: _buildDateField("From Date"),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              flex: 3,
-                              child: _buildDateField("To Date"),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(flex: 1, child: _buildSearchField()),
-                          ],
+                    // 2. Rounded Progress Bar with Text Inside
+                    if (isRevenueView) ...[
+                      GaugeWidget(value: 87777.00, unit: 'tk'),
+                    ] else ...[
+                      GaugeWidget(value: 57.00, unit: 'kWh/Sqft'),
+                    ],
+
+                    SizedBox(height: 60),
+
+                    if (isRevenueView) ...[
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [ExpandableDataCard()],
                         ),
                       ),
+                    ] else ...[
+                      // 3. Selection: Today Data vs Custom Data
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          buildCustomRadioButton(
+                            size: 14,
+                            label: 'Today Data',
+                            isSelected: !isCustomData,
+                            onTap: () {
+                              setState(() {
+                                isCustomData = false;
+                              });
+                            },
+                          ),
+                          buildCustomRadioButton(
+                            size: 14,
+                            isSelected: isCustomData,
+                            label: 'Custom Date Data',
+                            onTap: () {
+                              setState(() {
+                                isCustomData = true;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 20),
+
+                      // 4. Conditional Custom Data UI
+                      if (isCustomData) ...[
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: _buildDateField("From Date"),
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                flex: 3,
+                                child: _buildDateField("To Date"),
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(flex: 1, child: _buildSearchField()),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        // Square Search Bar
+                        EnergyChartWidget(),
+                      ],
                       SizedBox(height: 15),
-                      // Square Search Bar
                       EnergyChartWidget(),
                     ],
-                    SizedBox(height: 15),
-                    EnergyChartWidget(),
                   ],
                 ),
               ),
